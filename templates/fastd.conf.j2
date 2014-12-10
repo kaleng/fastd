@@ -1,0 +1,63 @@
+{% for b in fastd.bind %}
+bind {{ b }};
+{% endfor %}
+
+drop capabilities {{ fastd.drop_capabilities }};
+
+forward {{ fastd.forward }};
+
+hide ip address {{ fastd.hide_ip }};
+hide mac address {{ fastd.hide_mac }};
+
+{% for dir in fastd.peers_dir %}
+include peers from "{{ dir }}";
+{% endfor %}
+
+interface "{{ fastd.interface }}";
+
+log to syslog level {{ fastd.syslog_level }};
+
+{% for cipher in fastd.methods %}
+method "{{ cipher }}";
+{% endfor %}
+
+#mode {{ fastd.mode }};
+
+mtu {{ fastd.mtu }};
+
+{% if fastd.on_pre_up.command is defined %}
+on pre-up {{ fastd.on_pre_up.mode }} "{{ fastd.on_pre_up.command }}";
+{% endif %}
+{% if fastd.on_up.command is defined %}
+on up {{ fastd.on_up.mode }} "{{ fastd.on_up.command }}";
+{% endif %}
+{% if fastd.on_down.command is defined %}
+on down {{ fastd.on_down.mode }} "{{ fastd.on_down.command }}";
+{% endif %}
+{% if fastd.on_post_down.command is defined %}
+on post-down {{ fastd.on_post_down.mode }} "{{ fastd.on_post_down.command }}";
+{% endif %}
+
+{% if fastd.on_connect.command is defined %}
+on connect {{ fastd.on_connect.mode }} "{{ fastd.on_connect.command }}";
+{% endif %}
+
+{% if fastd.on_establish.command is defined %}
+on establish {{ fastd.on_establish.mode }} "{{ fastd.on_establish.command }}";
+{% endif %}
+{% if fastd.on_disestablish.command is defined %}
+on disestablish {{ fastd.on_disestablish.mode }} "{{ fastd.on_disestablish.command }}";
+{% endif %}
+
+{% if fastd.on_verify.command is defined %}
+on verify {{ fastd.on_verify.mode }} "{{ fastd.on_verify.command }}";
+{% endif %}
+
+pmtu {{ fastd.pmtu }};
+
+secret "{{ fastd.secret }}";
+
+secure handshakes {{ fastd.secure_handshakes }};
+
+status socket "{{ fastd.status_socket_path }}";
+

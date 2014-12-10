@@ -1,0 +1,18 @@
+---
+
+- apt_repository: repo='deb http://repo.universe-factory.net/debian/ sid main' state=present
+- apt_repository: repo='deb-src http://repo.universe-factory.net/debian/ sid main' state=present
+
+- apt_repository: repo='deb http://ftp.debian.org/debian/ wheezy-backports main' state=present
+- apt_repository: repo='deb-src http://ftp.debian.org/debian/ wheezy-backports main' state=present
+
+- name: install fastd
+  apt: name=fastd update_cache=yes
+
+- name: fastd directories
+  file: path="/etc/fastd/{{ fastd.interface }}/" state=directory
+
+- name: fastd.conf
+  template: src=fastd.conf.j2 dest="/etc/fastd/{{ fastd.interface }}/fastd.conf" owner=root mode=0600
+  notify: 
+  - restart fastd
