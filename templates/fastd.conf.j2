@@ -8,8 +8,8 @@ bind 0.0.0.0:10000;
 
 drop capabilities {{ fastd_drop_capabilities | default('yes') }};
 forward {{ fastd_forward | default('no') }};
-hide ip address {{ fastd_hide_ip | default('no') }};
-hide mac address {{ fastd_hide_mac | default('no') }};
+hide ip addresses {{ fastd_hide_ip | default('no') }};
+hide mac addresses {{ fastd_hide_mac | default('no') }};
 
 {% if fastd_peers_dir is defined %}
 {% for dir in fastd_peers_dir %}
