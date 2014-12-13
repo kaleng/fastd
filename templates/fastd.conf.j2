@@ -1,63 +1,75 @@
-{% for b in fastd.bind %}
+{% if item.bind is defined %}
+{% for b in item.bind %}
 bind {{ b }};
 {% endfor %}
+{% else %}
+bind 0.0.0.0:10000;
+{% endif %}
 
-drop capabilities {{ fastd.drop_capabilities }};
+drop capabilities {{ item.drop_capabilities | default('yes') }};
 
-forward {{ fastd.forward }};
+forward {{ item.forward | default('no') }};
 
-hide ip address {{ fastd.hide_ip }};
-hide mac address {{ fastd.hide_mac }};
+hide ip address {{ item.hide_ip | default('no') }};
+hide mac address {{ item.hide_mac | default('no') }};
 
-{% for dir in fastd.peers_dir %}
+{% if item.peers_dir is defined %}
+{% for dir in item.peers_dir %}
 include peers from "{{ dir }}";
 {% endfor %}
+{% endif %}
 
-interface "{{ fastd.interface }}";
+interface "{{ item.interface }}";
 
-log to syslog level {{ fastd.syslog_level }};
+log to syslog level {{ item.syslog_level | default('info') }};
 
-{% for cipher in fastd.methods %}
+{$ if item.methods is defined %}
+{% for cipher in item.methods %}
 method "{{ cipher }}";
 {% endfor %}
-
-#mode {{ fastd.mode }};
-
-mtu {{ fastd.mtu }};
-
-{% if fastd.on_pre_up.command is defined %}
-on pre-up {{ fastd.on_pre_up.mode }} "{{ fastd.on_pre_up.command }}";
-{% endif %}
-{% if fastd.on_up.command is defined %}
-on up {{ fastd.on_up.mode }} "{{ fastd.on_up.command }}";
-{% endif %}
-{% if fastd.on_down.command is defined %}
-on down {{ fastd.on_down.mode }} "{{ fastd.on_down.command }}";
-{% endif %}
-{% if fastd.on_post_down.command is defined %}
-on post-down {{ fastd.on_post_down.mode }} "{{ fastd.on_post_down.command }}";
+{% else %}
+method "salsa2012umac";
 {% endif %}
 
-{% if fastd.on_connect.command is defined %}
-on connect {{ fastd.on_connect.mode }} "{{ fastd.on_connect.command }}";
+mode {{ item.mode | default('tap') }};
+
+mtu {{ item.mtu | default(1500) }};
+
+{% if item.on_pre_up.command is defined %}
+on pre-up {{ item.on_pre_up.mode | default('sync') }} "{{ fastd.on_pre_up.command }}";
+{% endif %}
+{% if item.on_up.command is defined %}
+on up {{ item.on_up.mode | default('sync') }} "{{ fastd.on_up.command }}";
+{% endif %}
+{% if item.on_down.command is defined %}
+on down {{ item.on_down.mode | default('sync') }} "{{ fastd.on_down.command }}";
+{% endif %}
+{% if item.on_post_down.command is defined %}
+on post-down {{ item.on_post_down.mode | default('sync') }} "{{ fastd.on_post_down.command }}";
 {% endif %}
 
-{% if fastd.on_establish.command is defined %}
-on establish {{ fastd.on_establish.mode }} "{{ fastd.on_establish.command }}";
-{% endif %}
-{% if fastd.on_disestablish.command is defined %}
-on disestablish {{ fastd.on_disestablish.mode }} "{{ fastd.on_disestablish.command }}";
+{% if item.on_connect.command is defined %}
+on connect {{ item.on_connect.mode | default('async') }} "{{ fastd.on_connect.command }}";
 {% endif %}
 
-{% if fastd.on_verify.command is defined %}
-on verify {{ fastd.on_verify.mode }} "{{ fastd.on_verify.command }}";
+{% if item.on_establish.command is defined %}
+on establish {{ item.on_establish.mode | default('async') }} "{{ fastd.on_establish.command }}";
+{% endif %}
+{% if item.on_disestablish.command is defined %}
+on disestablish {{ item.on_disestablish.mode | default('async') }} "{{ fastd.on_disestablish.command }}";
 {% endif %}
 
-pmtu {{ fastd.pmtu }};
+{% if item.on_verify.command is defined %}
+on verify {{ item.on_verify.mode | default('async') }} "{{ fastd.on_verify.command }}";
+{% endif %}
 
-secret "{{ fastd.secret }}";
+pmtu {{ item.pmtu | default('auto') }};
 
-secure handshakes {{ fastd.secure_handshakes }};
+secret "{{ item.secret }}";
 
-status socket "{{ fastd.status_socket_path }}";
+secure handshakes {{ item.secure_handshakes | default('yes') }};
+
+{% if item.status_socket_path is defined %}
+status socket "{{ item.status_socket_path }}";
+{% endif %}
 
