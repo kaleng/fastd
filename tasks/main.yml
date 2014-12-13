@@ -10,11 +10,9 @@
   apt: name=fastd update_cache=yes
 
 - name: fastd directories
-  file: path="/etc/fastd/{{ item.interface }}/" state=directory
-  with_items: fastd_settings
+  file: path="/etc/fastd/{{ fastd_interface }}/" state=directory
 
 - name: fastd.conf
-  template: src=fastd.conf.j2 dest="/etc/fastd/{{ item.interface }}/fastd.conf" owner=root mode=0600
-  with_items: fastd_settings
+  template: src=fastd.conf.j2 dest="/etc/fastd/{{ fastd_interface }}/fastd.conf" owner=root mode=0600
   notify: 
   - restart fastd
