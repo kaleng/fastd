@@ -23,7 +23,7 @@ interface "{{ item.interface }}";
 
 log to syslog level {{ item.syslog_level | default('info') }};
 
-{$ if item.methods is defined %}
+{% if item.methods is defined %}
 {% for cipher in item.methods %}
 method "{{ cipher }}";
 {% endfor %}
