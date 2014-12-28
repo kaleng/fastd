@@ -38,8 +38,10 @@ fastd_on_verify:
   mode: async
 #  command: ./on_verify
 fastd_pmtu: 'auto'
-fastd_peers_dir:
-  - 'peers'
+fastd_peers:
+  nodes:
+    peers_dir: 'peers'
+    peers_limit: 100  
 fastd_secret: "[TOP SECRET]"
 fastd_secure_handshakes: 'yes'
 fastd_status_socket_path: '/var/log/fastd_status'

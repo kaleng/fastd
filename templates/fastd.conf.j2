@@ -11,9 +11,16 @@ forward {{ fastd_forward | default('no') }};
 hide ip addresses {{ fastd_hide_ip | default('no') }};
 hide mac addresses {{ fastd_hide_mac | default('no') }};
 
-{% if fastd_peers_dir is defined %}
-{% for dir in fastd_peers_dir %}
-include peers from "{{ dir }}";
+{% if fastd_peers is defined %}
+{% for name, group in fastd_peers.iteritems() %}
+{% if group.peers_dir is defined %}
+peer group "{{ name }}" {
+  include nodes from "{{ group.peers_dir }}";
+{% if group.peers_limit is defined %}
+  peer limit {{ group.peers_limit }};
+{% endif %}
+}
+{% endif %}
 {% endfor %}
 {% endif %}
 interface "{{ fastd_interface }}";
