@@ -15,7 +15,7 @@ hide mac addresses {{ fastd_hide_mac | default('no') }};
 {% for name, group in fastd_peers.iteritems() %}
 {% if group.peers_dir is defined %}
 peer group "{{ name }}" {
-  include nodes from "{{ group.peers_dir }}";
+  include peers from "{{ group.peers_dir }}";
 {% if group.peers_limit is defined %}
   peer limit {{ group.peers_limit }};
 {% endif %}
