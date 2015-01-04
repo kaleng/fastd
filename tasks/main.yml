@@ -1,5 +1,6 @@
 ---
-
+- name: Add repository for fastd
+  apt_key: keyserver='pgp.surfnet.nl' id=6664E7BDA6B669881EC52E7516EF3F64CB201D9C
 - apt_repository: repo='deb http://repo.universe-factory.net/debian/ sid main' state=present
 - apt_repository: repo='deb-src http://repo.universe-factory.net/debian/ sid main' state=present
 
