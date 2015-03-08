@@ -1,19 +1,25 @@
 ---
 - name: Add repository for fastd
   apt_key: keyserver='pgp.surfnet.nl' id=6664E7BDA6B669881EC52E7516EF3F64CB201D9C
-- apt_repository: repo='deb http://repo.universe-factory.net/debian/ sid main' state=present
-- apt_repository: repo='deb-src http://repo.universe-factory.net/debian/ sid main' state=present
+- apt_repository: repo='deb http://repo.universe-factory.net/debian/ sid main'
+- apt_repository: repo='deb-src http://repo.universe-factory.net/debian/ sid main'
 
-- apt_repository: repo='deb http://ftp.debian.org/debian/ wheezy-backports main' state=present
-- apt_repository: repo='deb-src http://ftp.debian.org/debian/ wheezy-backports main' state=present
+- apt_repository: repo='deb http://ftp.debian.org/debian/ wheezy-backports main'
+- apt_repository: repo='deb-src http://ftp.debian.org/debian/ wheezy-backports main'
 
 - name: install fastd
   apt: name=fastd update_cache=yes
 
 - name: fastd directories
-  file: path="/etc/fastd/{{ fastd_interface }}/" state=directory
+  file: path="/etc/fastd/{{ fastd_interface }}" state=directory
 
 - name: fastd.conf
-  template: src=fastd.conf.j2 dest="/etc/fastd/{{ fastd_interface }}/fastd.conf" owner=root mode=0600
+  template: src=fastd.conf.j2 dest="/etc/fastd/{{ fastd_interface }}/fastd.conf" owner=root group=root mode='0600'
   notify: 
+  - restart fastd
+
+- name: peers_dirs
+  file: path="/etc/fastd/{{ fastd_interface }}/{{ item.value.peers_dir }}" state=directory
+  with_dict: fastd_peers
+  notify:
   - restart fastd

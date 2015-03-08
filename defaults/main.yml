@@ -1,48 +1,15 @@
 ---
 # default variables for fastd
-
-fastd_bind:
-  - '0.0.0.0:10000'
 fastd_drop_capabilities: 'yes'
 fastd_forward: 'no'
-fastd_hide_ip: 'no'
-fastd_hide_mac: 'no'
-fastd_interface: 'mesh-vpn'
+fastd_hide_ip: 'yes'
+fastd_hide_mac: 'yes'
 fastd_syslog_level: 'info'
 fastd_methods:
-  - 'salsa2012+umac'
+- 'salsa2012+umac'
 fastd_mode: 'tap'
-fastd_mtu: 1500
-fastd_on_pre_up:
-  mode: sync
-#  command: ./on_pre_up
-fastd_on_up:
-  mode: sync
-#  command: ./on_up
-fastd_on_down:
-  mode: sync
-#  command: ./on_down
-fastd_on_post_down:
-  mode: sync
-#  command: ./on_post_down
-fastd_on_connect:
-  mode: async
-#  command: ./on_connect
-fastd_on_establish:
-  mode: async
-#  command: ./on_establish
-fastd_on_disestablish:
-  mode: async
-#  command: ./on_disestablish
-fastd_on_verify:
-  mode: async
-#  command: ./on_verify
+fastd_mtu: 1426
 fastd_pmtu: 'auto'
-fastd_peers:
-  nodes:
-    peers_dir: 'peers'
-    peers_limit: 100  
-fastd_secret: "[TOP SECRET]"
 fastd_secure_handshakes: 'yes'
-fastd_status_socket_path: '/var/log/fastd_status'
+fastd_status_socket: '/var/log/fastd_status'
 
