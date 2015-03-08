@@ -51,9 +51,11 @@ See: http://fastd.readthedocs.org/en/v16/manual/config.html
       [name]:
         peers_dir: '[dirname]'
         peers_limit: maximum number of peers to connect to
+    fastd_repository_key: (default: '6664E7BDA6B669881EC52E7516EF3F64CB201D9C')
     fastd_secret: fastd private key (mandatory)
     fastd_secure_handshakes: (default: yes)
     fastd_status_socket: (default: '/tmp/fastd_status')
+    pgp_keyserver: (default: 'pool.sks-keyservers.net')
 
 Example Playbook
 ----------------
