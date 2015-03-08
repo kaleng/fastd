@@ -10,6 +10,8 @@ fastd_methods:
 fastd_mode: 'tap'
 fastd_mtu: 1426
 fastd_pmtu: 'auto'
+fastd_repository_key: '6664E7BDA6B669881EC52E7516EF3F64CB201D9C'
 fastd_secure_handshakes: 'yes'
 fastd_status_socket: '/var/log/fastd_status'
+pgp_keyserver: 'pgp.surfnet.nl'
 
