@@ -1,6 +1,6 @@
 # {{ ansible_managed }}
 {% for b in fastd_bind %}
-bind {{ b.address }} port {{ b.port }}{% if b.interface is defined %} interface {{ b.interface }}{% endif %};
+bind {{ b.address }} port {{ b.port }}{% if b.interface is defined %} interface "{{ b.interface }}"{% endif %};
 {% endfor %}
 
 drop capabilities {{ fastd_drop_capabilities }};
