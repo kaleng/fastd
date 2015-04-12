@@ -15,3 +15,12 @@ fastd_secure_handshakes: 'yes'
 fastd_status_socket: '/var/log/fastd_status'
 pgp_keyserver: 'pool.sks-keyservers.net'
 
+# New Defaults
+fastd_interface: 'mesh-vpn'
+fastd_bind:
+- address: 'any'
+  port: 10000
+  interface: 'eth0'
+fastd_peers:
+  none:
+    peers_dir: '/etc/fastd/mesh-vpn/peers'
