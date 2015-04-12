@@ -17,7 +17,6 @@ pgp_keyserver: 'pool.sks-keyservers.net'
 
 # New Defaults
 fastd_interface: 'mesh-vpn'
-fastd_secret: 'generate'
 fastd_bind:
 - address: 'any'
   port: 10000
