@@ -14,7 +14,7 @@
   when: ansible_distribution=="Debian" and ansible_distribution_release=="wheezy"
 
 - name: install fastd
-  apt: name=fastd state=present
+  apt: name=fastd state=present force=yes
 
 - name: fastd directories
   file: path="/etc/fastd/{{ fastd_interface }}" state=directory
