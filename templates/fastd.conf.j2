@@ -61,7 +61,7 @@ on verify {{ fastd_on_verify.mode | default('async') }} "{{ fastd_on_verify.comm
 
 pmtu {{ fastd_pmtu }};
 
-secret "{{ fastd_secret }}";
+include "secret";
 secure handshakes {{ fastd_secure_handshakes }};
 
 {% if fastd_status_socket is defined %}
