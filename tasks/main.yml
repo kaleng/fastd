@@ -36,3 +36,7 @@
   with_dict: fastd_peers
   notify:
   - restart fastd
+
+- name: Verifying configuration
+  shell: fastd --verify-config -c /etc/fastd/{{ fastd_interface }}/fastd.conf
+
